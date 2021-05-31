@@ -16,6 +16,8 @@ export const common = [
   'fcitx-mozc',
   'fcitx-chewing',
   'ttf-ancient-fonts',
+  'fonts-liberation',
+  'fonts-dejavu-core',
   'fonts-wqy-microhei',
   'language-pack-gnome-zh-hant',
 ].map((name) => ({ name, install: [name] }));

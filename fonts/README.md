@@ -1,0 +1,51 @@
+# 實用字體
+
+字體檔放在 `~/.fonts` 後使用 `fc-cache -f` 更新快取
+
+## 網頁/系統
+
+- [jf 粉圓](https://github.com/justfont/open-huninn-font/releases/download/v1.1/jf-openhuninn-1.1.zip)
+- [台北黑體](https://sites.google.com/view/jtfoundry/zh-tw/downloads?authuser=0)
+- [文泉驛微米黑](../apt/index.html)
+
+## 程式/終端機
+
+- [MesloLGS NF](https://github.com/romkatv/powerlevel10k#manual-font-installation)
+- [LiberationMono](../apt/index.html)
+- [Dejavu Sans Mono](../apt/index.html)
+
+## fonts.conf
+
+`~/.config/fontconfig/fonts.conf`
+
+```xml
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+  # https://wiki.archlinux.org/title/Font_configuration/Examples#CJK,_but_other_Latin_fonts_are_preferred
+  <alias binding="strong">
+    <family>monospace</family>
+    <prefer>
+      <family>Liberation Mono</family>
+      <family>DejaVu Sans Mono</family>
+      <family>WenQuanYi Micro Hei Mono</family>
+    </prefer>
+  </alias>
+
+  <alias binding="strong">
+    <family>sans-serif</family>
+    <prefer>
+      <family>Taipei Sans TC Beta</family>
+      <family>WenQuanYi Micro Hei</family>
+    </prefer>
+  </alias>
+
+  <alias binding="strong">
+    <family>serif</family>
+    <prefer>
+      <family>DejaVu Serif</family>
+      <family>Noto Serif CJK TC</family>
+    </prefer>
+  </alias>
+</fontconfig>
+```
