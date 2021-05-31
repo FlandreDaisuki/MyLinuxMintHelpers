@@ -1,0 +1,28 @@
+alias cls='clear'
+alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
+
+alias apt.list.upgradable='apt list --upgradable'
+alias apt.list.installed='apt list --installed 2>&1 | tail -n+3'
+alias apt.auto='apt autoclean && apt autoremove'
+
+alias unzip.big5='unzip -O cp950'
+alias unzip.gb='unzip -O cp936'
+alias unzip.jp='unzip -O cp932'
+alias unzip.kr='unzip -O cp949'
+
+# docker
+alias docker.logs='docker logs -f --tail 100'
+alias docker.clean.images='docker rmi $(docker images -f "dangling=true" -q)'
+alias docker-compose.down-up='docker-compose down && docker-compose up -d'
+alias docker-compose.restart='docker-compose restart'
+
+# my service
+alias dmhy='docker exec -it dmhy dmhy'
+alias youtube-dl='docker run --rm -i -e PGID=$(id -g) -e PUID=$(id -u) -v "$(pwd)":/workdir:rw mikenye/youtube-dl'
+alias youtube-dl.best='youtube-dl -f bestvideo+bestaudio'
+
+# ffmpeg
+alias ffmpeg.test='_ffmpeg_test () { ffmpeg -i "$1" -c copy -f null -; }; _ffmpeg_test'
+alias ffmpeg.to.mp4='_ffmpeg_to_mp4 () { local j=$(basename "$1"); ffmpeg -i "$j" "+$j"; }; _ffmpeg_to_mp4'
+alias ffmpeg.concat.encode.mp4='ffmpeg -safe 0 -f concat -i <(find "$PWD" -type f -name '"'"'*.mp4'"'"' -printf "file '"'"'%p'"'"'\n" | sort) -c:v libx265 -c:a libvo_aacenc $(mktemp -u -p "$PWD" --suffix='"'"'.mp4'"'"')'
+alias ffmpeg.concat.mp4='ffmpeg -safe 0 -f concat -i <(find "$PWD" -type f -name '"'"'*.mp4'"'"' -printf "file '"'"'%p'"'"'\n" | sort) -c copy $(mktemp -u -p "$PWD" --suffix='"'"'.mp4'"'"')'
