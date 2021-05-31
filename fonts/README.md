@@ -4,7 +4,7 @@
 
 ## 網頁/系統
 
-- [jf 粉圓](https://github.com/justfont/open-huninn-font/releases/download/v1.1/jf-openhuninn-1.1.zip)
+- [jf open 粉圓](https://github.com/justfont/open-huninn-font/releases/download/v1.1/jf-openhuninn-1.1.zip)
 - [台北黑體](https://sites.google.com/view/jtfoundry/zh-tw/downloads?authuser=0)
 - [文泉驛微米黑](../apt/index.html)
 
@@ -13,6 +13,7 @@
 - [MesloLGS NF](https://github.com/romkatv/powerlevel10k#manual-font-installation)
 - [LiberationMono](../apt/index.html)
 - [Dejavu Sans Mono](../apt/index.html)
+- [Cascadia Code](https://github.com/microsoft/cascadia-code/releases/latest)
 
 ## fonts.conf
 
