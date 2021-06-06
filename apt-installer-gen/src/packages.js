@@ -4,12 +4,16 @@ export const required = [
 
 export const common = [
   'jq',
+  'bat',
   'git',
   'vim',
   'gimp',
+  'unrar',
   'deluge',
+  'mcomix',
   'gparted',
   'filezilla',
+  'mediainfo',
   'openssh-server',
   'build-essential',
   // l10n
