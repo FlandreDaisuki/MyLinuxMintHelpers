@@ -14,6 +14,7 @@ export const common = [
   'gparted',
   'filezilla',
   'mediainfo',
+  'obs-studio',
   'openssh-server',
   'build-essential',
   // l10n
