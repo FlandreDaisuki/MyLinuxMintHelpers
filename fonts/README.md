@@ -38,6 +38,7 @@
     <prefer>
       <family>Taipei Sans TC Beta</family>
       <family>WenQuanYi Micro Hei</family>
+      <family>Noto Sans</family>
     </prefer>
   </alias>
 

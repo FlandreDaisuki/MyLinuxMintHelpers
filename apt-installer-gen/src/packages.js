@@ -23,11 +23,13 @@ export const common = [
   // l10n
   'fcitx-mozc',
   'fcitx-chewing',
+  'language-pack-gnome-zh-hant',
+  // fonts
   'ttf-ancient-fonts',
+  'fonts-noto',
   'fonts-liberation',
   'fonts-dejavu-core',
   'fonts-wqy-microhei',
-  'language-pack-gnome-zh-hant',
 ].map((name) => ({ name, install: [name] }));
 
 export const simplePPA = [
@@ -35,7 +37,7 @@ export const simplePPA = [
   ['mpv', 'ppa:mc3man/mpv-tests'],
 ].map(([name, ppa]) => ({
   name,
-  preinstall: [`sudo add-apt-repository ${ppa}`],
+  preinstall: [`sudo add-apt-repository ${ ppa }`],
   install: [name],
 }));
 
