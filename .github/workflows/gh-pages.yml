@@ -1,0 +1,30 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches:
+    - ulyssa
+
+jobs:
+  github-pages:
+    name: Deploy GitHub Pages
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: ulyssa
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+    - run: |-
+        mkdir -p dist
+        cd apt-installer-gen
+        npm ci
+        npm run build
+        cd ..
+        mv apt-installer-gen/public dist/apt
+        mv third-party dist/third-party
+    - uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./dist
