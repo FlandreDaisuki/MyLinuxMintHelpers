@@ -4,8 +4,8 @@
 
 ## apt-install-gen
 
-[Try it online!](https://flandredaisuki.github.io/MyLinuxMintHelpers/apt-installer-gen/public/index.html)
+[Try it online!](https://flandredaisuki.github.io/MyLinuxMintHelpers/apt)
 
 ## 3rd-party binaries
 
-[Let me see!](https://flandredaisuki.github.io/MyLinuxMintHelpers/third-party/index.html)
+[Let me see!](https://flandredaisuki.github.io/MyLinuxMintHelpers/third-party)
