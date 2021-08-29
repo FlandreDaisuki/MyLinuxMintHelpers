@@ -7,16 +7,16 @@ import selectables from './packages'
 import { generateShellScript } from './helpers'
 
 
-export let packages = selectables.map((pkg) => Object.assign(pkg, {checked: false}));
+export let packages = selectables.map((pkg) => Object.assign(pkg, { checked: false }));
 
 $: generated = generateShellScript(packages);
 
 
 export const onClearAllClick = () => {
-  packages = selectables.map((pkg) => Object.assign(pkg, {checked: false}))
+  packages = selectables.map((pkg) => Object.assign(pkg, { checked: false }))
 }
 export const onSelectAllClick = () => {
-  packages = selectables.map((pkg) => Object.assign(pkg, {checked: true}))
+  packages = selectables.map((pkg) => Object.assign(pkg, { checked: true }))
 }
 export const onDownloadClick = () => {
   saveAs(new Blob([generated], {type: "text/plain;charset=utf-8"}), 'apt-installer.sh');
@@ -27,6 +27,35 @@ export let copyBtn;
 onMount(() => {
   clip = new Clipboard(copyBtn, { text: () => generated });
 })
+
+$: {
+  const shareable = packages.filter((pkg) => pkg.checked).map((pkg) => pkg.name);
+  const u = new URLSearchParams(location.search);
+  if (shareable.length) {
+    u.set('pkg', shareable.join(','));
+  } else {
+    u.delete('pkg')
+  }
+  if (u.toString()) {
+    history.replaceState(null, null, '?' + u.toString());
+  } else {
+    history.replaceState(null, null, '/');
+  }
+};
+
+const query = new URLSearchParams(location.search);
+const pkgQuery = query.get('pkg');
+if(pkgQuery) {
+  const queriedPackages = pkgQuery
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+  packages = selectables.map((pkg) => {
+    const checked = queriedPackages.includes(pkg.name);
+    return Object.assign(pkg, { checked });
+  })
+}
 </script>
 
 <main>

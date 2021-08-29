@@ -9,16 +9,16 @@ export const generateShellScript = (packages) => {
 #!/bin/bash
 
 # Install required packages
-sudo apt-get install -y ${required.join(' ')}
+sudo apt-get install -y ${ required.join(' ') }
 
 # Preliminary before install
-${preliminary.join('\n')}
+${ preliminary.join('\n') }
 
 sudo apt-get update
-sudo apt-get install -y ${toInstallPackages.join(' ')}
+sudo apt-get install -y ${ toInstallPackages.join(' ') }
 
 # Tidy up if needed
-${tidyUp.join('\n')}
+${ tidyUp.join('\n') }
 
 echo 'Done!'
 `.trimStart();
