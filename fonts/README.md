@@ -7,6 +7,9 @@
 - [jf open 粉圓](https://github.com/justfont/open-huninn-font/releases/download/v1.1/jf-openhuninn-1.1.zip)
 - [台北黑體](https://sites.google.com/view/jtfoundry/zh-tw/downloads?authuser=0)
 - [文泉驛微米黑](../apt/index.html)
+- [教育部標準楷書字形檔](https://language.moe.gov.tw/001/Upload/Files/site_content/M0001/edukai.pdf)
+- [教育部標準字體宋體字形檔](https://language.moe.gov.tw/001/Upload/Files/site_content/M0001/edusun.pdf)
+- [教育部隸書字形檔](https://language.moe.gov.tw/001/Upload/Files/site_content/M0001/eduli.pdf)
 
 ## 程式/終端機
 
