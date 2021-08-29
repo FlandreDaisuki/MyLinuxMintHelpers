@@ -39,7 +39,7 @@ $: {
   if (u.toString()) {
     history.replaceState(null, null, '?' + u.toString());
   } else {
-    history.replaceState(null, null, '/');
+    history.replaceState(null, null, location.pathname);
   }
 };
 
