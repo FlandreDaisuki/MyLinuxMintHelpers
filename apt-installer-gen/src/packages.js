@@ -14,6 +14,7 @@ export const common = [
   'mcomix',
   'opencc',
   'gparted',
+  'optipng',
   'filezilla',
   'mediainfo',
   'obs-studio',
