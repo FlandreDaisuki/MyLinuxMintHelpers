@@ -22,3 +22,16 @@ alias docker-compose.restart='docker-compose restart'
 alias dmhy='docker exec -it dmhy dmhy'
 alias youtube-dl='docker run --rm -i -e PGID=$(id -g) -e PUID=$(id -u) -v "$(pwd)":/workdir:rw mikenye/youtube-dl'
 alias youtube-dl.best='youtube-dl -f bestvideo+bestaudio'
+
+# git
+__git_prune_branches () {
+  if [ -z "$(command -v jq)" ] && [ -z "$(command -v git)" ]; then
+    return 1
+  fi
+
+  git fetch --prune
+  git branch --merged master \
+    | jq -Rr 'gsub("^\\S*\\s+"; "") | select(. != "master")' \
+    | "$SHELL"
+}
+alias git.prune.branches='__git_prune_branches'
