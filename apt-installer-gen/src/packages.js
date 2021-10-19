@@ -20,6 +20,7 @@ export const common = [
   'obs-studio',
   'openssh-server',
   'build-essential',
+  'chromium-browser',
   'silversearcher-ag',
   // l10n
   'fcitx-mozc',
@@ -38,7 +39,7 @@ export const simplePPA = [
   ['mpv', 'ppa:mc3man/mpv-tests'],
 ].map(([name, ppa]) => ({
   name,
-  preinstall: [`sudo add-apt-repository ${ ppa }`],
+  preinstall: [`sudo add-apt-repository ${ppa}`],
   install: [name],
 }));
 
