@@ -31,7 +31,7 @@ __git_prune_branches () {
 
   git fetch --prune
   git branch --merged master \
-    | jq -Rr 'gsub("^\\S*\\s+"; "") | select(. != "master")' \
+    | jq -Rr 'gsub("^\\S*\\s+"; "") | select(. != "master") | "git branch -d \(.)"' \
     | "$SHELL"
 }
 alias git.prune.branches='__git_prune_branches'
