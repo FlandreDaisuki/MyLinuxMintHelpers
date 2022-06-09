@@ -42,9 +42,14 @@ else
   touch ~/flandre.aliases
 fi
 
-export PATH=~/bin:~/bin/firefox:~/bin/Telegram:$PATH
+export PATH=~/bin:~/.local/bin:~/bin/firefox:~/bin/Telegram:$PATH
 
 export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
+
+# Init zoxide
+if [[ -n "$(command -v zoxide)" ]]; then
+  eval "$(zoxide init "${SHELL##*/}")"
+fi
 
 # prune $PATH
 # https://unix.stackexchange.com/a/14896
