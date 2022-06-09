@@ -1,4 +1,10 @@
+# shellcheck shell=bash
 alias cls='clear'
+
+alias ls='exa -I lost+found'
+alias ll='exa -al'
+alias tree='exa --tree'
+
 alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
 
 alias apt.list.upgradable='apt list --upgradable'
@@ -20,8 +26,20 @@ alias docker-compose.restart='docker-compose restart'
 
 # my service
 alias dmhy='docker exec -it dmhy dmhy'
-alias youtube-dl='docker run --rm -i -e PGID=$(id -g) -e PUID=$(id -u) -v "$(pwd)":/workdir:rw mikenye/youtube-dl'
+alias bat='docker run --rm -it -v="$PWD:/workdir" flandre/bat bat'
+alias youtube-dl='docker run --rm -it -e PGID=$(id -g) -e PUID=$(id -u) -v "$(pwd)":/workdir:rw mikenye/youtube-dl'
 alias youtube-dl.best='youtube-dl -f bestvideo+bestaudio'
+alias ctop='docker run --rm -it --name=ctop-$RANDOM -v /var/run/docker.sock:/var/run/docker.sock quay.io/vektorlab/ctop:latest'
+alias glances='docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock:ro --pid host --network host nicolargo/glances:latest-full'
+
+__docker_run_npx_bcrypt_cli () {
+  PASSWORD="$1"
+  ROUND="$2"
+  # docker run --rm -it node:14-alpine npx bcrypt-cli "$PASSWORD" "${ROUND:-15}"
+  docker run --rm -it -e NPM_CONFIG_UPDATE_NOTIFIER=false \
+    node:18-alpine npx --yes --quiet bcrypt-cli "$PASSWORD" "${ROUND:-15}"
+}
+alias bcrypt-cli='__docker_run_npx_bcrypt_cli'
 
 # git
 __git_prune_branches () {

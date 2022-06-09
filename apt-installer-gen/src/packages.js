@@ -4,7 +4,6 @@ export const required = [
 
 export const common = [
   'jq',
-  'bat',
   'git',
   'vim',
   'gimp',
@@ -15,13 +14,13 @@ export const common = [
   'opencc',
   'gparted',
   'optipng',
+  'ripgrep',
   'filezilla',
   'mediainfo',
   'obs-studio',
   'openssh-server',
   'build-essential',
   'chromium-browser',
-  'silversearcher-ag',
   // l10n
   'fcitx-mozc',
   'fcitx-chewing',
