@@ -48,7 +48,12 @@ export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PR
 
 # Init zoxide
 if [[ -n "$(command -v zoxide)" ]]; then
-  eval "$(zoxide init "${SHELL##*/}")"
+  eval "$(zoxide init bash)"
+fi
+
+# Init mcfly
+if [[ -n "$(command -v mcfly)" ]]; then
+  eval "$(mcfly init bash)"
 fi
 
 # prune $PATH
