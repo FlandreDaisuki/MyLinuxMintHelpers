@@ -4,7 +4,6 @@ export const required = [
 
 export const common = [
   'jq',
-  'git',
   'vim',
   'gimp',
   'kazam',
@@ -34,8 +33,9 @@ export const common = [
 ].map((name) => ({ name, install: [name] }));
 
 export const simplePPA = [
-  ['shutter', 'ppa:linuxuprising/shutter'],
+  ['git', 'ppa:git-core/ppa'],
   ['mpv', 'ppa:mc3man/mpv-tests'],
+  ['shutter', 'ppa:linuxuprising/shutter'],
 ].map(([name, ppa]) => ({
   name,
   preinstall: [`sudo add-apt-repository ${ppa}`],
