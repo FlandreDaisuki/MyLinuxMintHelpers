@@ -6,6 +6,17 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>第三方軟體列表</title>
+  <script>
+    async function getLatestReleaseAssetsByPattern(owner, repo, pattern) {
+      const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/releases/latest`);
+      const json = await res.json();
+      const found = json.assets.find((asset) => {
+        return asset.name.match(pattern)
+      });
+
+      return {...found, tag_name: json.tag_name};
+    }
+  </script>
 </head>
 
 <body>
@@ -14,10 +25,29 @@
   <ul id="binary-list">
     <li><a href="https://telegram.org/dl/desktop/linux">Telegram Desktop</a></li>
     <li><a href="https://github.com/odeke-em/drive/releases/download/v0.4.0/drive_linux">odeke-em/drive v0.4.0</a></li>
-    <li><a href="https://github.com/ogham/exa/releases/download/v0.10.1/exa-linux-x86_64-v0.10.1.zip">ogham/exa v0.10.1</a> (<a href="exa-installer.sh">installer</a>)</li>
-    <li><a href="https://github.com/FiloSottile/mkcert/releases/download/v1.4.3/mkcert-v1.4.3-linux-amd64">FiloSottile/mkcert v1.4.3</a></li>
-    <li><a href="https://github.com/cantino/mcfly/releases/download/v0.6.0/mcfly-v0.6.0-x86_64-unknown-linux-musl.tar.gz">cantino/mcfly v0.6.0</a></li>
-    <li><a href="https://github.com/ajeetdsouza/zoxide/releases/download/v0.8.1/zoxide-v0.8.1-x86_64-unknown-linux-musl.tar.gz">ajeetdsouza/zoxide v0.8.1</a> (<a href="zoxide-installer.sh">installer</a>)</li>
+    <li id="mkcert"><a href="https://github.com/FiloSottile/mkcert/releases/download/v1.4.3/mkcert-v1.4.3-linux-amd64">FiloSottile/mkcert v1.4.3</a></li>
+    <script async>
+      getLatestReleaseAssetsByPattern('FiloSottile', 'mkcert', /mkcert-[v.\d]+-linux-amd64/i)
+        .then(({browser_download_url, tag_name}) => {
+          mkcert.innerHTML = `<a href="${browser_download_url}">FiloSottile/mkcert ${tag_name}</a>`;
+        })
+    </script>
+    <li id="mcfly"><a href="https://github.com/cantino/mcfly/releases/download/v0.6.0/mcfly-v0.6.0-x86_64-unknown-linux-musl.tar.gz">cantino/mcfly v0.6.0</a></li>
+    <script async>
+      getLatestReleaseAssetsByPattern('cantino', 'mcfly', /mcfly-[v.\d]+-x86_64-unknown-linux-musl.tar.gz/i)
+        .then(({browser_download_url, tag_name}) => {
+          mcfly.innerHTML = `<a href="${browser_download_url}">cantino/mcfly ${tag_name}</a>`;
+        })
+    </script>
+    <li id="zoxide"><a href="https://github.com/ajeetdsouza/zoxide/releases/download/v0.8.1/zoxide-v0.8.1-x86_64-unknown-linux-musl.tar.gz">ajeetdsouza/zoxide v0.8.1</a> (<a href="zoxide-installer.sh">installer</a>)</li>
+    <script async>
+      getLatestReleaseAssetsByPattern('ajeetdsouza', 'zoxide', /zoxide-[v.\d]+-x86_64-unknown-linux-musl.tar.gz/i)
+        .then((asset) => {
+          const {browser_download_url, tag_name} = asset;
+          console.log(asset);
+          zoxide.innerHTML = `<a href="${browser_download_url}">ajeetdsouza/zoxide ${tag_name}</a> (<a href="zoxide-installer.sh">installer</a>)`;
+        })
+    </script>
   </ul>
   <h2>Deb Package</h2>
   <ul id="deb-list">
