@@ -1,9 +1,9 @@
 # shellcheck shell=bash
 alias cls='clear'
 
-alias ls='exa -I lost+found'
-alias ll='exa -al'
-alias tree='exa --tree'
+alias ls='lsd -I lost+found'
+alias ll='lsd -al'
+alias tree='lsd --tree'
 
 alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
 
