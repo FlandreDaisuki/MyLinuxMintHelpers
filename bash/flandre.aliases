@@ -18,30 +18,32 @@ alias unzip.kr='unzip -O cp949'
 
 alias imageoptim.png='optipng'
 
+########
 # docker
+
 alias docker.logs='docker logs -f --tail 100'
 alias docker.clean.images='docker rmi $(docker images -f "dangling=true" -q)'
 alias docker-compose.down-up='docker-compose down && docker-compose up -d'
 alias docker-compose.restart='docker-compose restart'
 
-# my service
 alias dmhy='docker exec -it dmhy dmhy'
-alias bat='docker run --rm -it -v="$PWD:/workdir" flandre/bat bat'
-alias youtube-dl='docker run --rm -it -e PGID=$(id -g) -e PUID=$(id -u) -v "$(pwd)":/workdir:rw mikenye/youtube-dl'
-alias youtube-dl.best='youtube-dl -f bestvideo+bestaudio'
+alias bat='docker run --rm -it -v="$(pwd):/workdir" flandre/bat bat'
+alias yt-dlp='docker run --rm -it -v "$(pwd):/downloads:rw" jauderho/yt-dlp'
+alias ngrok-alt='docker run --rm -it -v "$(pwd):/root/www:ro" ghcr.io/flandredaisuki/docker-local-static-server'
 alias ctop='docker run --rm -it --name=ctop-$RANDOM -v /var/run/docker.sock:/var/run/docker.sock quay.io/vektorlab/ctop:latest'
 alias glances='docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock:ro --pid host --network host nicolargo/glances:latest-full'
 
 __docker_run_npx_bcrypt_cli () {
   PASSWORD="$1"
   ROUND="$2"
-  # docker run --rm -it node:14-alpine npx bcrypt-cli "$PASSWORD" "${ROUND:-15}"
   docker run --rm -it -e NPM_CONFIG_UPDATE_NOTIFIER=false \
-    node:18-alpine npx --yes --quiet bcrypt-cli "$PASSWORD" "${ROUND:-15}"
+    node:lts-alpine npx --yes --quiet bcrypt-cli "$PASSWORD" "${ROUND:-15}"
 }
 alias bcrypt-cli='__docker_run_npx_bcrypt_cli'
 
+#####
 # git
+
 __git_prune_branches () {
   if [ -z "$(command -v jq)" ] && [ -z "$(command -v git)" ]; then
     return 1
