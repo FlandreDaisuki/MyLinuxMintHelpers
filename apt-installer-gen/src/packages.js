@@ -65,22 +65,22 @@ const winehqPkg = {
     'sudo wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/winehq-jammy.sources',
   ],
   postinstall: ['sudo apt-get install -y --install-recommends winehq-stable'],
-}
+};
 
 const nvidiaDockerPkg = {
   name: 'nvidia-docker',
-  preinstall:[
+  preinstall: [
     'curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg',
     `curl -s -L https://nvidia.github.io/libnvidia-container/$distribution/libnvidia-container.list \\
     | sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' \\
-    | sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list`
+    | sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list`,
   ],
-  install:['cuda-drivers', 'nvidia-docker2'],
-  postinstall:[
+  install: ['cuda-drivers', 'nvidia-docker2'],
+  postinstall: [
     '# reboot to apply nvidia-docker',
-    '# test it by run `docker run --rm --gpus all nvidia/cuda:11.8.0-base-ubuntu22.04 nvidia-smi`'
-  ]
-}
+    '# test it by run `docker run --rm --gpus all nvidia/cuda:11.8.0-base-ubuntu22.04 nvidia-smi`',
+  ],
+};
 
 export default [
   ...common,

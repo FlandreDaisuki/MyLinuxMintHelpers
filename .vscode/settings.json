@@ -1,24 +1,27 @@
 {
-    "markdown.extension.toc.levels": "2..6",
-    "cSpell.ignorePaths": [
-        "**/package-lock.json",
-        "**/node_modules/**",
-        "**/vscode-extension/**",
-        "**/.git/objects/**",
-        ".vscode",
-        ".vscode-insiders",
-        "apt-installer-gen/package.json",
-        "apt-installer-gen/rollup.config.js",
-        "apt-installer-gen/src/packages.js",
-        "apt-installer-gen/public/build",
-        "bash/flandre.aliases",
-        "fonts/README.md"
-    ],
-    "cSpell.ignoreWords": [
-        "peaceiris",
-        "preinstall"
-    ],
-    "cSpell.words": [
-        "ulyssa"
-    ]
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "markdown.extension.toc.levels": "2..6",
+  "cSpell.ignorePaths": [
+    "**/package-lock.json",
+    "**/node_modules/**",
+    "**/vscode-extension/**",
+    "**/.git/objects/**",
+    ".vscode",
+    ".vscode-insiders",
+    "apt-installer-gen/package.json",
+    "apt-installer-gen/rollup.config.js",
+    "apt-installer-gen/src/packages.js",
+    "apt-installer-gen/public/build",
+    "bash/flandre.aliases",
+    "fonts/README.md"
+  ],
+  "cSpell.ignoreWords": [
+    "peaceiris",
+    "preinstall"
+  ],
+  "cSpell.words": [
+    "ulyssa"
+  ]
 }
