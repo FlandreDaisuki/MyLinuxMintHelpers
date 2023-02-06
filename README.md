@@ -1,6 +1,6 @@
 # My Linux Mint Helpers
 
-- Version: Linux Mint 20.1 (ulyssa)
+- Version: Linux Mint 21.1 (vera)
 
 ## apt-install-gen
 

@@ -3,19 +3,19 @@ name: Deploy GitHub Pages
 on:
   push:
     branches:
-    - ulyssa
+    - vera
 
 jobs:
   github-pages:
     name: Deploy GitHub Pages
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
-        ref: ulyssa
-    - uses: actions/setup-node@v2
+        ref: vera
+    - uses: actions/setup-node@v3
       with:
-        node-version: '14'
+        node-version: '18'
     - run: |-
         mkdir -p dist
         cd apt-installer-gen
