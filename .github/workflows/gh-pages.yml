@@ -3,28 +3,54 @@ name: Deploy GitHub Pages
 on:
   push:
     branches:
-    - vera
+      - vera
 
 jobs:
   github-pages:
     name: Deploy GitHub Pages
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-      with:
-        ref: vera
-    - uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-    - run: |-
-        mkdir -p dist
-        cd apt-installer-gen
-        npm ci
-        npm run build
-        cd ..
-        mv apt-installer-gen/public dist/apt
-        mv third-party dist/third-party
-    - uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./dist
+      - uses: actions/checkout@v3
+        with:
+          ref: vera
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        with:
+          version: 7
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Build apt-install-gen
+        run: |-
+          mkdir -p dist
+          cd apt-installer-gen
+          pnpm install
+          pnpm run build
+          cd ..
+          mv apt-installer-gen/public dist/apt
+
+      - run: |
+          mv third-party dist/third-party
+
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
