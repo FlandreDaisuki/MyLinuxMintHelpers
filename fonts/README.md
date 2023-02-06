@@ -1,6 +1,6 @@
 # 實用字體
 
-字體檔放在 `~/.fonts` 後使用 `fc-cache -f` 更新快取
+字體檔放在 `~/.local/share/fonts` 後使用 `fc-cache -f` 更新快取
 
 ## 網頁/系統
 
@@ -13,7 +13,7 @@
 
 ## 程式/終端機
 
-- [MesloLGS NF](https://github.com/romkatv/powerlevel10k#manual-font-installation)
+- [Nerd Fonts](https://www.nerdfonts.com/)
 - [LiberationMono](https://flandredaisuki.github.io/MyLinuxMintHelpers/apt/?pkg=fonts-liberation)
 - [Dejavu Sans Mono](https://flandredaisuki.github.io/MyLinuxMintHelpers/apt/?pkg=fonts-dejavu-core)
 - [Cascadia Code](https://github.com/microsoft/cascadia-code/releases/latest)
