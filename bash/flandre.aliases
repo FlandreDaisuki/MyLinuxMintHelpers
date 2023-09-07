@@ -1,37 +1,94 @@
-# shellcheck shell=bash
-alias cls='clear'
-
 alias ls='lsd -I lost+found'
 alias ll='lsd -al'
 alias tree='lsd --tree'
+alias cls='clear'
+alias bat='batcat'
 
 alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
 
 alias apt.list.upgradable='apt list --upgradable'
 alias apt.list.installed='apt list --installed 2>&1 | tail -n+3'
-alias apt.auto='apt autoclean && apt autoremove'
+alias apt.auto='apt autoclean && apt autoremove && apt autopurge'
 
 alias unzip.big5='unzip -O cp950'
 alias unzip.gb='unzip -O cp936'
 alias unzip.jp='unzip -O cp932'
 alias unzip.kr='unzip -O cp949'
 
-alias imageoptim.png='optipng'
+alias wine.jp='LANG=ja_JP.UTF-8 wine64'
+alias wine32.jp='LANG=ja_JP.UTF-8 wine'
 
-########
-# docker
+alias imgoptim.png='optipng'
+alias imgoptim.jpg='jpegoptim'
+
+__extract() {
+  if [ -f "$1" ]; then
+    case "$1" in
+      *.tar.bz2)   tar xjf "$1"   ;;
+      *.tar.gz)    tar xzf "$1"   ;;
+      *.tar.xz)    tar xf "$1"   ;;
+      *.bz2)       bunzip2 "$1"   ;;
+      *.rar)       rar x "$1"     ;;
+      *.gz)        gunzip "$1"    ;;
+      *.tar)       tar xf "$1"    ;;
+      *.tbz2)      tar xjf "$1"   ;;
+      *.tgz)       tar xzf "$1"   ;;
+      *.zip)       unzip "$1"     ;;
+      *.Z)         uncompress "$1"  ;;
+      *.7z)        7z x "$1"    ;;
+      *)           echo "'$1' cannot be extracted via extract()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+alias extract='__extract'
+
+alias mozc-dict='/usr/lib/mozc/mozc_tool --mode=dictionary_tool'
+
+__curl_test() {
+  local D
+  D="$(date -Iseconds)"
+  local S
+  S="$(TIME="%es" time curl -o /dev/null -sL "${1}" 2>&1)"
+  printf '[%s] %s %s\n' "$D" "${S:-NaN}" "${1}"
+}
+alias curl-test='__curl_test'
+
+__kill_by_port() {
+  fuser -k "$1/tcp"
+}
+alias port.kill='__kill_by_port'
+alias port.ls.tcp='ss -lt'
+alias port.ls.udp='ss -lu'
+alias port.ls='ss -lut'
+
+##########
+# docker #
+##########
 
 alias docker.logs='docker logs -f --tail 100'
 alias docker.clean.images='docker rmi $(docker images -f "dangling=true" -q)'
-alias docker-compose.down-up='docker-compose down && docker-compose up -d'
-alias docker-compose.restart='docker-compose restart'
+alias docker.compose.down-up='docker compose down && docker compose up -d'
+alias docker.compose.restart='docker compose restart'
 
 alias dmhy='docker exec -it dmhy dmhy'
-alias bat='docker run --rm -it -v="$(pwd):/workdir" flandre/bat bat'
 alias yt-dlp='docker run --rm -it -v "$(pwd):/downloads:rw" jauderho/yt-dlp'
-alias ngrok-alt='docker run --rm -it -v "$(pwd):/root/www:ro" ghcr.io/flandredaisuki/docker-local-static-server'
-alias ctop='docker run --rm -it --name=ctop-$RANDOM -v /var/run/docker.sock:/var/run/docker.sock quay.io/vektorlab/ctop:latest'
-alias glances='docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock:ro --pid host --network host nicolargo/glances:latest-full'
+alias ngrok-alt='docker run --rm -it -v "$(pwd):/root/www:ro" ghcr.io/flandredaisuki/docker-local-static-server:1.0.0-cloudflared'
+alias ngrok-alt-spa='docker run --rm -it -v "${PWD}:/usr/share/nginx/html:ro" ghcr.io/flandredaisuki/docker-local-static-server:1.0.0-cloudflared-spa'
+
+alias cloudflared='docker run --rm -it cloudflare/cloudflared'
+__create_http_tunnel() {
+  if [ -z "$1" ]; then
+    echo 'usage: cf-tunnel PORT'
+    return 1
+  fi
+
+  docker run --rm -it cloudflare/cloudflared tunnel --url "http://172.17.0.1:$1"
+}
+alias cf-tunnel='__create_http_tunnel'
+
+alias ctop='docker run --rm -it --name=ctop-$RANDOM -v /var/run/docker.sock:/var/run/docker.sock -v /etc/localtime:/etc/localtime:ro quay.io/vektorlab/ctop:latest'
 
 __docker_run_npx_bcrypt_cli () {
   PASSWORD="$1"
@@ -40,18 +97,41 @@ __docker_run_npx_bcrypt_cli () {
     node:lts-alpine npx --yes --quiet bcrypt-cli "$PASSWORD" "${ROUND:-15}"
 }
 alias bcrypt-cli='__docker_run_npx_bcrypt_cli'
+alias sqlite3='docker run --rm -it -v "$(pwd):/workspace" -w /workspace keinos/sqlite3'
 
-#####
-# git
+#######
+# git #
+#######
 
 __git_prune_branches () {
-  if [ -z "$(command -v jq)" ] && [ -z "$(command -v git)" ]; then
+  if [ -z "$(command -v git)" ]; then
     return 1
   fi
 
+  local HAS_ANYTHING_TO_STASH
+  HAS_ANYTHING_TO_STASH="$(git stash create)"
+  if [ -n "$HAS_ANYTHING_TO_STASH" ]; then
+    git stash push -m 'wip: stash workspace before prune branches'
+  fi
+
+  local CURRENT_BRANCH
+  CURRENT_BRANCH="$(git branch --show-current)"
+
+  git switch master
+  git pull
   git fetch --prune
   git branch --merged master \
-    | jq -Rr 'gsub("^\\S*\\s+"; "") | select(. != "master") | "git branch -d \(.)"' \
+    | sed -r 's/^[*]?[ ]+//g' \
+    | grep -vE '^master$|^main$' \
+    | sed 's/^/git branch -d /' \
     | "$SHELL"
+
+  if git branch | grep -q "$CURRENT_BRANCH" ; then
+    git switch "$CURRENT_BRANCH"
+  fi
+
+  if [ -n "$HAS_ANYTHING_TO_STASH" ]; then
+    git stash pop
+  fi
 }
 alias git.prune.branches='__git_prune_branches'

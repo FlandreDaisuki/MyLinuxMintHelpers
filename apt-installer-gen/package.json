@@ -1,6 +1,6 @@
 {
   "name": "apt-installer-gen",
-  "version": "1.21.1",
+  "version": "1.21.2",
   "private": true,
   "scripts": {
     "build": "rollup -c",
@@ -11,14 +11,14 @@
     "@flandredaisuki/eslint-config": "^0.0.4",
     "@rollup/plugin-commonjs": "^17.1.0",
     "@rollup/plugin-node-resolve": "^11.2.1",
-    "@rollup/plugin-terser": "^0.4.0",
+    "@rollup/plugin-terser": "^0.4.3",
     "@types/file-saver": "^2.0.5",
-    "eslint": "^8.33.0",
+    "eslint": "^8.48.0",
     "rollup": "^2.79.1",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-livereload": "^2.0.5",
-    "rollup-plugin-svelte": "^7.1.0",
-    "svelte": "^3.55.1"
+    "rollup-plugin-svelte": "^7.1.6",
+    "svelte": "^3.59.2"
   },
   "dependencies": {
     "clipboard": "^2.0.11",
