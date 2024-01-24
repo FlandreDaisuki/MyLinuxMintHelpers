@@ -73,7 +73,7 @@ alias docker.compose.down-up='docker compose down && docker compose up -d'
 alias docker.compose.restart='docker compose restart'
 
 alias dmhy='docker exec -it dmhy dmhy'
-alias yt-dlp='docker run --rm -it -v "$(pwd):/downloads:rw" jauderho/yt-dlp'
+alias yt-dlp='docker run --rm -it -v "$(pwd):/downloads:rw" -u "$(id -u):$(id -g)" jauderho/yt-dlp'
 alias ngrok-alt='docker run --rm -it -v "$(pwd):/root/www:ro" ghcr.io/flandredaisuki/docker-local-static-server:1.0.0-cloudflared'
 alias ngrok-alt-spa='docker run --rm -it -v "${PWD}:/usr/share/nginx/html:ro" ghcr.io/flandredaisuki/docker-local-static-server:1.0.0-cloudflared-spa'
 
@@ -90,13 +90,15 @@ alias cf-tunnel='__create_http_tunnel'
 
 alias ctop='docker run --rm -it --name=ctop-$RANDOM -v /var/run/docker.sock:/var/run/docker.sock -v /etc/localtime:/etc/localtime:ro quay.io/vektorlab/ctop:latest'
 
-__docker_run_npx_bcrypt_cli () {
-  PASSWORD="$1"
-  ROUND="$2"
-  docker run --rm -it -e NPM_CONFIG_UPDATE_NOTIFIER=false \
-    node:lts-alpine npx --yes --quiet bcrypt-cli "$PASSWORD" "${ROUND:-15}"
+__docker_run_bunx_bcrypt_cli () {
+  local PASSWORD
+  PASSWORD="${1}"
+  local ROUND
+  ROUND="${2}"
+
+  docker run --rm oven/bun bun x bcrypt-cli "${PASSWORD}" "${ROUND:-15}" 2>/dev/null
 }
-alias bcrypt-cli='__docker_run_npx_bcrypt_cli'
+alias bcrypt-cli='__docker_run_bunx_bcrypt_cli'
 alias sqlite3='docker run --rm -it -v "$(pwd):/workspace" -w /workspace keinos/sqlite3'
 
 #######

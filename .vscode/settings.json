@@ -1,10 +1,11 @@
 {
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   },
   "markdown.extension.toc.levels": "2..6",
   "cSpell.ignorePaths": [
     "**/package-lock.json",
+    "**/pnpm-lock.yaml",
     "**/node_modules/**",
     "**/vscode-extension/**",
     "**/.git/objects/**",
@@ -20,8 +21,5 @@
   "cSpell.ignoreWords": [
     "peaceiris",
     "preinstall"
-  ],
-  "cSpell.words": [
-    "ulyssa"
   ]
 }

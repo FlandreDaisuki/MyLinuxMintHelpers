@@ -7,6 +7,8 @@ export const common = [
   'gh',
   'vim',
   'gimp',
+  'htop',
+  'webp',
   'kazam',
   'unrar',
   'ffmpeg',
@@ -19,9 +21,9 @@ export const common = [
   'ripgrep',
   'fail2ban',
   'filezilla',
+  'flameshot',
   'jpegoptim',
   'mediainfo',
-  'obs-studio',
   'qbittorrent',
   'virt-manager',
   'openssh-server',
@@ -41,6 +43,7 @@ export const common = [
 
 export const simplePPA = [
   ['git', 'ppa:git-core/ppa'],
+  ['obs-studio', 'ppa:obsproject/obs-studio'],
 ].map(([name, ppa]) => ({
   name,
   preinstall: [`sudo add-apt-repository ${ppa}`],

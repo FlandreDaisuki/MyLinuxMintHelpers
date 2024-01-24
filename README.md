@@ -1,6 +1,6 @@
 # My Linux Mint Helpers
 
-- Version: Linux Mint 21.2 (victoria)
+- Version: Linux Mint 21.3 (virginia)
 
 ## apt-install-gen
 

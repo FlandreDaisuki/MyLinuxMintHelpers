@@ -3,26 +3,29 @@ name: Deploy GitHub Pages
 on:
   push:
     branches:
-      - victoria
+      - virginia
 
 jobs:
   github-pages:
     name: Deploy GitHub Pages
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
-          ref: victoria
+          ref: virginia
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
 
-      - uses: pnpm/action-setup@v2
-        name: Install pnpm
-        with:
-          version: 8
-          run_install: false
+      - run: |
+          corepack enable
+          corepack prepare pnpm@latest-8 --activate
+
+      - run: |
+          cd apt-installer-gen
+          pnpm install
+          cd ..
 
       - name: Get pnpm store directory
         id: pnpm-cache
@@ -31,7 +34,7 @@ jobs:
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - name: Setup pnpm cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
