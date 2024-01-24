@@ -103,6 +103,25 @@ const dockerIoPkg = {
   install: ['docker-ce', 'docker-ce-cli', 'containerd.io', 'docker-buildx-plugin', 'docker-compose-plugin'],
 };
 
+const firefoxBetaPkg = {
+  name: 'firefox-beta',
+  preinstall: [
+    '# https://support.mozilla.org/en-US/kb/install-firefox-linux#w_install-firefox-deb-package-for-debian-based-distributions',
+    'sudo install -d -m 0755 /etc/apt/keyrings',
+    'wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | sudo tee /etc/apt/keyrings/packages.mozilla.org.asc > /dev/null',
+    'echo "deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main" | sudo tee -a /etc/apt/sources.list.d/mozilla.list > /dev/null',
+    `echo '
+    Package: *
+    Pin: origin packages.mozilla.org
+    Pin-Priority: 1000
+    ' | sudo tee /etc/apt/preferences.d/mozilla`.replaceAll(/^\s+/mg, ''),
+  ],
+  install: [
+    'firefox-beta',
+    'firefox-beta-l10n-zh-tw',
+  ],
+}
+
 export default [
   ...common,
   ...simplePPA,
@@ -110,4 +129,5 @@ export default [
   winehqPkg,
   nvidiaDockerPkg,
   dockerIoPkg,
+  firefoxBetaPkg,
 ];
