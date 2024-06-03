@@ -1,7 +1,7 @@
 alias ls='lsd -I lost+found'
 alias ll='lsd -al'
 alias tree='lsd --tree'
-alias cls='clear'
+alias cls="clear && printf '\e[3J'"
 alias bat='batcat'
 
 alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
@@ -63,6 +63,11 @@ alias port.ls.tcp='ss -lt'
 alias port.ls.udp='ss -lu'
 alias port.ls='ss -lut'
 
+__parse_jwt_payload() {
+  TZ='Asia/Taipei' echo "${1}" | jc --jwt | jq '.payload + {"expire-at": .payload.exp | strftime("%Y-%m-%dT%H:%M:%S %Z")}'
+}
+alias jwt='__parse_jwt_payload'
+
 ##########
 # docker #
 ##########
@@ -73,9 +78,19 @@ alias docker.compose.down-up='docker compose down && docker compose up -d'
 alias docker.compose.restart='docker compose restart'
 
 alias dmhy='docker exec -it dmhy dmhy'
-alias yt-dlp='docker run --rm -it -v "$(pwd):/downloads:rw" -u "$(id -u):$(id -g)" jauderho/yt-dlp'
-alias ngrok-alt='docker run --rm -it -v "$(pwd):/root/www:ro" ghcr.io/flandredaisuki/docker-local-static-server:1.0.0-cloudflared'
-alias ngrok-alt-spa='docker run --rm -it -v "${PWD}:/usr/share/nginx/html:ro" ghcr.io/flandredaisuki/docker-local-static-server:1.0.0-cloudflared-spa'
+
+alias yt-dlp='docker run --rm -it \
+  -v "$(pwd):/downloads:rw" \
+  -u "$(id -u):$(id -g)" \
+  jauderho/yt-dlp'
+
+alias ngrok-alt='docker run --rm -it \
+  -v "$(pwd):/www:ro" \
+  ghcr.io/flandredaisuki/dlss:darkhttpd-1.0.2'
+
+alias ngrok-alt-spa='docker run --rm -it \
+  -v "${PWD}:/www:ro" \
+  ghcr.io/flandredaisuki/dlss:nginx-spa-1.0.1'
 
 alias cloudflared='docker run --rm -it cloudflare/cloudflared'
 __create_http_tunnel() {
@@ -88,7 +103,11 @@ __create_http_tunnel() {
 }
 alias cf-tunnel='__create_http_tunnel'
 
-alias ctop='docker run --rm -it --name=ctop-$RANDOM -v /var/run/docker.sock:/var/run/docker.sock -v /etc/localtime:/etc/localtime:ro quay.io/vektorlab/ctop:latest'
+alias ctop='docker run --rm -it \
+  --name=ctop-$RANDOM \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /etc/localtime:/etc/localtime:ro \
+  quay.io/vektorlab/ctop:latest'
 
 __docker_run_bunx_bcrypt_cli () {
   local PASSWORD
