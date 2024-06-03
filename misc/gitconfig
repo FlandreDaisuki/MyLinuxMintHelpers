@@ -1,0 +1,13 @@
+[init]
+        defaultBranch = master
+[core]
+        editor = vim
+[push]
+        autoSetupRemote = true
+[alias]
+        ignore = "!gi() { curl -sL https://www.toptal.com/developers/gitignore/api/$@ ;}; gi"
+        su = "!bun x git-user-switch"
+[gpg]
+        format = ssh
+[commit]
+        gpgsign = true
