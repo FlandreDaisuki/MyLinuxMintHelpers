@@ -64,10 +64,10 @@ alias port.ls.udp='ss -lu'
 alias port.ls='ss -lut'
 
 __parse_jwt() {
-  TZ='Asia/Taipei' echo "${1}" | jq -R '
+  echo "${1}" | jq -R '
   { header: split(".")[0] | @base64d | fromjson, payload: split(".")[1] | @base64d | fromjson } 
     | if .payload.exp != null then 
-        .payload += {"*expire-at": .payload.exp | strftime("%Y-%m-%dT%H:%M:%S %Z")} 
+        .payload += {"*expire-at": .payload.exp | strflocaltime("%Y-%m-%dT%H:%M:%S %Z")} 
       else 
         . 
       end'
