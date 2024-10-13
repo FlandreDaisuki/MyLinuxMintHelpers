@@ -27,18 +27,18 @@
   <h2>Binary</h2>
   <ul id="binary-list">
     <li><a href="https://telegram.org/dl/desktop/linux">Telegram Desktop</a></li>
-    <li id="mcfly"><a href="https://github.com/cantino/mcfly/releases/download/v0.8.1/mcfly-v0.8.1-x86_64-unknown-linux-musl.tar.gz">cantino/mcfly v0.8.1</a></li>
-    <script async>
-      getLatestReleaseAssetsByPattern('cantino', 'mcfly', /mcfly-[v.\d]+-x86_64-unknown-linux-musl.tar.gz/i)
-        .then(({browser_download_url, tag_name}) => {
-          mcfly.innerHTML = `<a href="${browser_download_url}">cantino/mcfly ${tag_name}</a>`;
-        })
-    </script>
     <li id="jless"><a href="https://github.com/PaulJuliusMartinez/jless/releases/download/v0.9.0/jless-v0.9.0-x86_64-unknown-linux-gnu.zip">PaulJuliusMartinez/jless v0.9.0</a></li>
     <script async>
       getLatestReleaseAssetsByPattern('PaulJuliusMartinez', 'jless', /jless-[v.\d]+-x86_64-unknown-linux-gnu.zip/i)
         .then(({browser_download_url, tag_name}) => {
-          jless.innerHTML = `<a href="${browser_download_url}">PaulJuliusMartinez/jless ${tag_name}</a>`;
+          document.getElementById('jless').innerHTML = `<a href="${browser_download_url}">PaulJuliusMartinez/jless ${tag_name}</a>`;
+        })
+    </script>
+    <li id="fzf"><a href="https://github.com/junegunn/fzf/releases/download/v0.55.0/fzf-0.55.0-linux_amd64.tar.gz">junegunn/fzf v0.55.0</a></li>
+    <script async>
+      getLatestReleaseAssetsByPattern('junegunn', 'fzf', /fzf-[v.\d]+-linux_amd64.tar.gz/i)
+        .then(({browser_download_url, tag_name}) => {
+          document.getElementById('fzf').innerHTML = `<a href="${browser_download_url}">junegunn/fzf ${tag_name}</a>`;
         })
     </script>
   </ul>
@@ -50,22 +50,6 @@
     <li><a href="https://cdn.cloudflare.steamstatic.com/client/installer/steam.deb">Steam</a></li>
     <li><a href="https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb">DBeaver</a></li>
     <li><a href="https://discord.com/api/download?platform=linux&format=deb">Discord</a></li>
-    <li>
-      <a href="https://downloads.realvnc.com/download/file/vnc.files/VNC-Server-7.6.0-Linux-x64.deb">VNC Server v7.6.0</a>
-      <details open>
-        <summary>VNC Server 安裝踩雷</summary>
-
-        <h3>安裝完成後要按以下步驟走才能成功跑起來</h3>
-        <ol>
-          <li>用 <code>sudo /usr/bin/vnclicensewiz</code> 將設定跑完</li>
-          <li>用 <code>sudo vncpasswd -service</code> 來設定桌面密碼</li>
-          <li>下 <code>echo 'Authentication=VncAuth' | sudo tee -a /root/.vnc/config.d/vncserver-x11</code></li>
-          <li>最後重啟服務 <code>sudo systemctl restart vncserver-x11-serviced.service</code></li>
-        </ol>
-
-        <cite>參考：<a href="https://help.realvnc.com/hc/en-us/community/posts/5313103951517-No-Authentication-Schemes-Configured">No Authentication Schemes Configured - RealVNC Help Center</a></cite>
-      </details>
-    </li>
   </ul>
 
   <h2>Build from source</h2>

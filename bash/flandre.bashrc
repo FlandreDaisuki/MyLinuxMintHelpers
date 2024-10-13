@@ -33,6 +33,15 @@ function git_prompt() {
 }
 PS1=$(git_prompt)
 
+# add bash_completion folder
+if [ -d ~/flandre.bash_completion ]; then
+  find ~/flandre.bash_completion -name '*.completion.bash' | while read -r FILE; do
+    # shellcheck disable=SC1090
+    source "$FILE"
+  done
+else
+  mkdir -p ~/flandre.bash_completion
+fi
 
 # add aliases
 if [[ -f ~/flandre.aliases ]]; then
@@ -44,17 +53,32 @@ fi
 
 export PATH=~/bin:~/.local/bin:~/bin/firefox:~/bin/Telegram:$PATH
 
-export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
+# Added by n-install (see http://git.io/n-install-repo)
+export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
 
-# Init zoxide
-if [[ -n "$(command -v zoxide)" ]]; then
+# pnpm
+export PNPM_HOME="/home/flandre/.local/share/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+# pnpm end
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH=$BUN_INSTALL/bin:$PATH
+# bun end
+
+# zoxide
+if [ -n "$(command -v zoxide)" ]; then
   eval "$(zoxide init bash)"
 fi
+# zoxide end
 
-# Init mcfly
-if [[ -n "$(command -v mcfly)" ]]; then
-  eval "$(mcfly init bash)"
+# fzf
+if [ -n "$(command -v fzf)" ]; then
+  eval "$(fzf --bash)"
+  # https://github.com/junegunn/fzf?tab=readme-ov-file#supported-commands
+  _fzf_setup_completion path ffmpeg
 fi
+# fzf end
 
 # prune $PATH
 # https://unix.stackexchange.com/a/14896
